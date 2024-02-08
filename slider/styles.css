@@ -1,0 +1,27 @@
+.slider {
+	overflow: hidden;
+	width: 900px;
+}
+.slider__track {
+	margin-bottom: 20px;
+	width: 900px;
+	display: flex;
+	flex-wrap: nowrap;
+	transition: .4s ease-in-out;
+}
+.slider__link {
+	width: 400px;
+	height: 400px;
+}
+.slider__item {
+	flex-shrink: 0;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+.slider__buttons {
+	display: flex;
+	justify-content: center;
+	gap: 30px;
+	margin-bottom: 30px;
+}

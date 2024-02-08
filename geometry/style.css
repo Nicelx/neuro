@@ -1,0 +1,126 @@
+.geometry {
+	width: 100vw;
+	display: flex;
+	flex-direction: column;
+	gap: 300px;
+	align-items: center;
+	flex: 1;
+}
+.geometry > div {
+	width: 300px;
+	height: 300px;
+}
+
+.geometry__circle {
+	background-color: aqua;
+	border-radius: 50%;
+}
+.geometry__circle_animate {
+	animation: 1s circle;
+}
+
+.geometry__triangle {
+	background-color: greenyellow;
+	clip-path: polygon(50% 0, 0% 100%, 100% 100%);
+}
+.geometry__triangle_animate {
+	animation: 5s triangle;
+}
+
+.geometry__square {
+	background-color: chocolate;
+	clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+.geometry__square_animate {
+	animation: 5s square;
+}
+.geometry__rect {
+	background-color: blueviolet;
+	clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+}
+.geometry__rect_animate {
+	animation: 3s rect;
+}
+
+@keyframes circle {
+	10%,
+	50%,
+	70%,
+	100% {
+		transform: translateY(300px);
+	}
+	25% {
+		transform: translateY(200px);
+	}
+	60% {
+		transform: translateY(240px);
+	}
+	80% {
+		transform: translateY(280px);
+	}
+}
+
+@keyframes triangle {
+	20% {
+		clip-path: polygon(50% 50%, 0% 100%, 50% 42%, 65% 65%);
+	}
+	30% {
+		clip-path: polygon(50% 50%, 0 0, 50% 42%, 60% 66%);
+	}
+	50% {
+		clip-path: polygon(50% 50%, 100% 0, 50% 42%, 55% 67%);
+	}
+	70% {
+		clip-path: polygon(50% 50%, 100% 100%, 50% 42%, 48% 64%);
+	}
+	90% {
+		clip-path: polygon(50% 50%, 0 100%, 50% 42%, 45% 65%);
+	}
+	100% {
+		clip-path: polygon(50% 0, 0% 100%, 100% 100%);
+	}
+}
+
+@keyframes square {
+	30%,
+	55% {
+		transform: perspective(300px) rotate3d(0, 0, 0, 0deg);
+	}
+	25% {
+		transform: perspective(300px) rotate3d(1, 0, 0, 180deg);
+	}
+	50% {
+		transform: perspective(300px) rotate3d(0, 1, 0, 180deg);
+	}
+	75% {
+		transform: perspective(300px) rotateZ(3600deg) translateX(-1200px) scale(0.1);
+		clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+	}
+	100% {
+		clip-path: circle();
+	}
+}
+@keyframes rect {
+	20%,
+	40%,
+	60%,
+	80%,
+	100% {
+		transform: scale(1);
+	}
+	1% {
+		transform: scale(1.1);
+	}
+	21% {
+		transform: scale(1.5);
+	}
+	41% {
+		transform: scale(2);
+	}
+	61% {
+		transform: scale(3);
+	}
+	81% {
+		transform: scale(5);
+	}
+}
