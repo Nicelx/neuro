@@ -1,22 +1,15 @@
 const BASE_URL = "https://reqres.in/api/users";
-const url2 = "https://reqres.in/api/users?page=2";
-
-// const api = fetch(url2)
-// .then(response => {
-// 	console.log(response.json());
-// })
 
 class Users {
 	#users = [];
 	#usersListRef;
 	#loaderRef;
-	#loadMoreRef;
 	#currentPage = 1;
+	#isNoMoreToLoad = false;
 
 	constructor() {
 		this.#usersListRef = document.querySelector(".users");
 		this.#loaderRef = document.querySelector(".loading");
-		document.querySelector(".load-more").addEventListener('click', this.#loadMore)
 		this.#getUsers(BASE_URL);
 	}
 
@@ -25,20 +18,42 @@ class Users {
 		try {
 			const response = await fetch(url);
 			if (!response.ok) throw new Error("response ne ok");
-			const { data } = await response.json();
+
+			const { data, total } = await response.json();
+
+			if (!data) throw new Error("no data");
+			// validation tests
+			// data[1].avatar = '';
+			// data[2].first_name = 234;
+
+			data.forEach((user) => {
+				const { isValid, message } = Validator.validateUser(user);
+				if (!isValid) throw new Error(`Validation: ${message}`)
+			});
+
 			this.#setLoading(false);
-			this.#users = data.sort(sortNames);
+
+			this.#users = [...this.#users, ...data].sort(sortNames);
+
+			if (this.#users.length >= total) {
+				this.#isNoMoreToLoad = true;
+			}
+
 			this.#renderUsers();
 		} catch (e) {
 			this.#setLoading(false);
+			console.error(e)
 		}
 	}
 	#renderUsers() {
-		console.log(this.#users);
 		let template = "";
 		this.#users.forEach((user) => {
 			template += this.#buildUserTemplate(user);
 		});
+
+		const reg = /<script[\s\S]*?>[\s\S]*?<\/script>/gi;
+
+		template = template.replace(reg, "");
 
 		this.#usersListRef.innerHTML = `<ul class = "users__list">
 			${template}
@@ -67,12 +82,18 @@ class Users {
 		}
 	}
 
-	#loadMore() {
-		alert('load more');
-		const nextPage = this.#currentPage++;
-		const url = `${BASE_URL}?page=${nextPage}`
-		this.#getUsers(url)
-	}
+	loadMore = async (e) => {
+		if (this.#isNoMoreToLoad) {
+			e.target.disabled = true;
+			e.target.innerText = "no more to load";
+			return;
+		}
+
+		this.#currentPage = this.#currentPage + 1;
+		const url = `${BASE_URL}?page=${this.#currentPage}`;
+		await this.#getUsers(url);
+	};
 }
 
 const users = new Users();
+document.querySelector(".load-more").addEventListener("click", users.loadMore);

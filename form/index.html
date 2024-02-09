@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<div class="form__container">
+			<form action = 'https://jsonplaceholder.typicode.com/todos/1' method="POST" class="form">
+				<h1 class="form__title">Apply for opportunities</h1>
+				<label class="form__label" for="name"> Name: </label>
+				<input required class ="form__input" id="name" type="text" name="name"/>
+
+				<label class="form__label" for="tel"> Tel: </label>
+				<input required class="form__input" id="tel" type="tel" name = "tel"/>
+
+				<label class="form__label" for="password"> Password: </label>
+				<input required class="form__input" id="password" name="password" type="password" />
+
+				<label class="form__label" for="confirm"> Confirm Password: </label>
+				<input required class="form__input" id="confirm" type="password" />
+
+				<span class = "form__error-message"></span>
+
+				<button type="submit" id = "submit" class = "form__btn">Submit!</button>
+			</form>
+		</div>
+
+		<script src="index.js"></script>
+	</body>
+</html>
